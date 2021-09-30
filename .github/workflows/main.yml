@@ -1,0 +1,50 @@
+name: Build iqta
+on:
+  push:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, ubuntu-18.04, windows-2019, macos-10.15]
+        node-version:
+          - '10.x'  # npm v6, chose by jurplel.
+          - '12.x'  # npm v6.
+          - '14.x'  # npm v6.
+          - '16.x'  # npm v7.
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: pzhlkj6612/install-qt-action
+          ref: 59f08e42a726f2bd91e36457a99d34dc1aff54cb  # latest
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: "get npm version in node ${{ matrix.node-version }}"
+        id: npm_version
+        run: echo "::set-output name=version::$(npm --version)"
+
+      - name: "npm ci with npm ${{ steps.npm_version.outputs.version }} in node ${{ matrix.node-version }}"
+        run: npm ci
+
+      - name: "npm run build with npm ${{ steps.npm_version.outputs.version }} in node ${{ matrix.node-version }}"
+        run: |
+          npm run build-setup-python
+          npm run build
+
+      - name: Install Qt with options
+        uses: ./
+        with:
+          modules: 'qtwebengine'
+          version: 6.1.2
+
+          tools: 'tools_ifw,4.0.0,qt.tools.ifw.40 tools_qtcreator,4.13.2-0,qt.tools.qtcreator'
