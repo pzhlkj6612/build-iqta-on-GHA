@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: pzhlkj6612/install-qt-action
-          ref: cb4a8978c3ab4be2de5e964f8a0b26e74c52ad2e  # --cwd
+          ref: 59f08e42a726f2bd91e36457a99d34dc1aff54cb  # latest
           fetch-depth: 1
 
       - uses: actions/setup-node@v1
@@ -37,9 +37,12 @@ jobs:
       - name: "npm ci with npm ${{ steps.npm_version.outputs.version }} in node ${{ matrix.node-version }}"
         run: npm ci
 
-      - name: "npm run build with npm ${{ steps.npm_version.outputs.version }} in node ${{ matrix.node-version }}"
+      - name: "'npm run build-setup-python' with npm ${{ steps.npm_version.outputs.version }} in node ${{ matrix.node-version }}"
         run: |
           npm run build-setup-python
+
+      - name: "'npm run build' with npm ${{ steps.npm_version.outputs.version }} in node ${{ matrix.node-version }}"
+        run: |
           npm run build
 
       - name: Install Qt with options
