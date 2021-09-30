@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: pzhlkj6612/install-qt-action
-          ref: 59f08e42a726f2bd91e36457a99d34dc1aff54cb  # latest
+          ref: 8dac200e5f8e7019a9141ae87a0443b17950de6b  # separated scripts
           fetch-depth: 1
 
       - uses: actions/setup-node@v1
