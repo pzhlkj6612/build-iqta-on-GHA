@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: pzhlkj6612/install-qt-action
-          ref: 8dac200e5f8e7019a9141ae87a0443b17950de6b  # separated scripts
+          ref: 59f08e42a726f2bd91e36457a99d34dc1aff54cb  # latest
           fetch-depth: 1
 
       - uses: actions/setup-node@v1
@@ -38,9 +38,14 @@ jobs:
 
       - name: "'npm run ...' with npm ${{ steps.npm_version.outputs.version }} in node ${{ matrix.node-version }}"
         run: |
-          npm run install-setup-python-deps
           npm run build-setup-python
           npm run build
+          
+      - name: Are those libs built?
+        run: |
+          cat node_modules/setup-python/lib/find-python.js
+          cat node_modules/setup-python/lib/install-python.js
+          cat node_modules/setup-python/lib/setup-python.js
 
       - name: Install Qt with options
         uses: ./
