@@ -41,11 +41,21 @@ jobs:
           npm run build-setup-python
           npm run build
           
+      # Workflow commands for GitHub Actions - GitHub Docs
+      # https://docs.github.com/en/actions/learn-github-actions/workflow-commands-for-github-actions#stopping-and-starting-workflow-commands
+      - run: echo "::stop-commands::stop-commandsstop-commandsstop-commands"
+
       - run: cat './node_modules/setup-python/lib/find-python.js'
           
       - run: cat './node_modules/setup-python/lib/install-python.js'
           
       - run: cat './node_modules/setup-python/lib/setup-python.js'
+
+      - if: ${{ runner.os == 'Windows' }}
+        run: Write-Host -NoNewline "::stop-commandsstop-commandsstop-commands::"  # stupid
+
+      - if: ${{ runner.os != 'Windows' }}
+        run: echo "::stop-commandsstop-commandsstop-commands::"
 
       - name: Install Qt with options
         uses: ./
