@@ -36,8 +36,9 @@ jobs:
       - name: "npm ci with npm ${{ steps.npm_version.outputs.version }} in node ${{ matrix.node-version }}"
         run: npm ci
 
-      - name: "'npm run build-setup-python; npm run build' with npm ${{ steps.npm_version.outputs.version }} in node ${{ matrix.node-version }}"
+      - name: "'npm run ...' with npm ${{ steps.npm_version.outputs.version }} in node ${{ matrix.node-version }}"
         run: |
+          npm run install-setup-python-deps
           npm run build-setup-python
           npm run build
 
