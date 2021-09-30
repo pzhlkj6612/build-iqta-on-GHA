@@ -41,11 +41,11 @@ jobs:
           npm run build-setup-python
           npm run build
           
-      - name: Are those libs built?
-        run: |
-          cat node_modules/setup-python/lib/find-python.js
-          cat node_modules/setup-python/lib/install-python.js
-          cat node_modules/setup-python/lib/setup-python.js
+      - run: cat './node_modules/setup-python/lib/find-python.js'
+          
+      - run: cat './node_modules/setup-python/lib/install-python.js'
+          
+      - run: cat './node_modules/setup-python/lib/setup-python.js'
 
       - name: Install Qt with options
         uses: ./
